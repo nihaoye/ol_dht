@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+	<script src="js/dzlp.js?122gg"></script>
+	<style>
+		.mydis{
+			position:relative;
+			width:50px;
+			height:50px;
+		}
+		.jtbg{
+			position:absolute;
+			width:100%;
+			height:100%;
+			background:rgba(240,57,59,0.5);
+			border-radius: 50%;
+			transform-origin:50%;
+			-webkit-transform-origin:50%;
+			-webkit-animation:mydisa 1.3s infinite;
+			-o-animation:mydisa 1.3s infinite;
+			animation:mydisa 1.3s infinite;
+			animation-direction:alternate;
+			-webkit-animation-direction:alternate;
+		}
+		@keyframes mydisa {
+			from{
+				-webkit-transform: scale(1);
+				-moz-transform: scale(1);
+				-ms-transform: scale(1);
+				-o-transform: scale(1);
+				transform: scale(1);
+			}
+			to{
+				-webkit-transform: scale(1.4);
+				-moz-transform: scale(1.4);
+				-ms-transform: scale(1.4);
+				-o-transform: scale(1.4);
+				transform: scale(1.4);
+			}
+		}
+		@-webkit-keyframes mydisa{
+			from{
+				-webkit-transform: scale(1);
+				-moz-transform: scale(1);
+				-ms-transform: scale(1);
+				-o-transform: scale(1);
+				transform: scale(1);
+			}
+			to{
+				-webkit-transform: scale(1.4);
+				-moz-transform: scale(1.4);
+				-ms-transform: scale(1.4);
+				-o-transform: scale(1.4);
+				transform: scale(1.4);
+			}
+		}
+		.jt{
+			width:100%;
+			height:100%;
+			background:url(images/mapdis.png);
+			background-size:100%;
+		}
+		#test1{
+			font-size:50px;
+			color:black;
+			margin-top: 295px;
+		}
+	</style>
+</head>
+<body>
+<div>
+	<div>
+		<div class="mydis" id="mydis">
+			<div class="jtbg"></div>
+			<div id="jt" class="jt"></div>
+		</div>
+	</div>
+	<div id="test1">^</div>
+</div>
+<div id="mouse-position" style="top:10px;left:10px;position:absolute;font-size:30px;"></div>
+<script>
+	var dzlp=new Dzlp("jt");
+</script>
+</body>
+</html>

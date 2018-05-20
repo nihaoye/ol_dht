@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Geolocation</title>
+	<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+	<link rel="stylesheet" href="css/css.css" type="text/css">
+	<script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+	<script src="js/fed-transform.js"></script>
+	<style>
+		.circle{
+			background:blueviolet;
+			width:20px;
+			height:20px;
+			border-radius:50%;
+			position:absolute;
+			z-index:9;
+			animation:mymove 2s infinite;
+			-webkit-animation:mymove 2s infinite; /* Safari 和 Chrome */
+		}
+		@keyframes mymove
+		{
+			from {opacity:0.3;}
+			to {opacity:1;}
+		}
+	</style>
+</head>
+<body style="width:100vw;height:100vh">
+<div id="map" class="map" style="width:4559px;height:5031px;position:relative;">
+	<div class="circle" style="left:508px;top:3625px"></div>
+	<div class="circle" style="left:3468px;top:3697px"></div>
+</div>
+<div id="mouse-position" style="top:10px;left:10px;position:absolute"></div>
+<script src="js/test.js"></script>
+</body>
+</html>
