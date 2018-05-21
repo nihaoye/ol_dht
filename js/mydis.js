@@ -27,7 +27,7 @@ function Dzlp(elm){
 	}, true);
 	window.addEventListener('deviceorientation',function(e){
 		_self.change(e);
-	});
+	},false);
 }
 /**
  * 
@@ -128,5 +128,14 @@ function Mydis(opt){
 			});
 			return geolocation;
 		}
+	}
+	
+	function caculateFc(coords){
+		var result=[0,0];
+		for(var i=0;i<coords.length;i++){
+			result[0]+=Math.pow(coords[0]);
+			result[1]+=Math.pow(coords[1]);
+		}
+		return result;
 	}
 }
