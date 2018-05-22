@@ -1,9 +1,13 @@
 /**
  * Created by Administrator on 2018/5/16.
  */
+	
 var extent=[12686826.330880566, 2582764.0012257705, 12687961.789686656, 2584247.1004240722];//[12686813.812213715, 2582713.078183079, 12688175.048197903, 2584215.2449381677];
+var sourceProj='EPSG:4326';
+var targetProj="EPSG:3857";
 var view = new ol.View({
-	center:fc.proj.transform([113.9672493,22.60450238],'EPSG:4326','GCJ02:3857'),
+	projection: targetProj,
+	center:fc.proj.transform([113.9672493,22.60450238],sourceProj,targetProj),
 	zoom: 18,
 /*	extent:extent,*/
 /*	rotation:-1.5707963*/
@@ -18,15 +22,15 @@ var layer=new ol.layer.Image({
 	opacity:0.9,
 	source:image
 });*/
-var imagelayer=new ol.layer.Image({
+/*var imagelayer=new ol.layer.Image({
 	opacity:0.5,
 	source: new ol.source.ImageStatic({
 		url: 'images/zoomda.jpg',
 		projection:'EPSG:3857',
 		imageExtent: extent
 	})
-});
-var rk=new ol.Feature(new ol.geom.Point([12686910.3906, 2583069.4528]));
+});*/
+/*var rk=new ol.Feature(new ol.geom.Point([12686910.3906, 2583069.4528]));
 var mxg=new ol.Feature(new ol.geom.Point([12687302.8021, 2583445.2558]));
 var yws=new ol.Feature(new ol.geom.Point([12686925.533077912, 2583125.8121094285]));
 var xsj=new ol.Feature(new ol.geom.Point([12687733.940686736, 2583171.0395570323]));
@@ -45,7 +49,7 @@ var flayer=new ol.layer.Vector({
 			})
 		})
 	})
-});
+});*/
 var map = new ol.Map({
 	controls: ol.control.defaults({
 		attributionOptions: {
@@ -54,15 +58,27 @@ var map = new ol.Map({
 	}),//.extend([mousePositionControl]),
 	layers: [
 		new ol.layer.Tile({
+			title: "天地图路网",
 			source: new ol.source.XYZ({
-				url:'http://webst0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}'
+				url: "http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}"
+			})
+		}),
+		new ol.layer.Tile({
+			title: "天地图文字标注",
+			source: new ol.source.XYZ({
+				url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
 			})
 		}),
 		/*new ol.layer.Tile({
+			source: new ol.source.XYZ({
+				url:'http://webst0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}'
+			})
+		}),*/
+		/*new ol.layer.Tile({
 			source: new ol.source.OSM()
 		}),*/
-		imagelayer,
-		flayer
+		//imagelayer,
+		//flayer
 		
 	],
 	target: 'map',
@@ -76,7 +92,7 @@ mydis.events.changePosition=function(p){
 		map.getView().setCenter(p);
 		isFirst=false;
 	}
-	var hp=ol.proj.transform(p,'GCJ02:3857','EPSG:4326');
+	var hp=ol.proj.transform(p,targetProj,'EPSG:4326');
 	info.innerHTML=hp[0].toFixed(6)+","+hp[1].toFixed(6);
 	
 };

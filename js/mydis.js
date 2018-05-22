@@ -111,6 +111,7 @@ function Mydis(opt){
 			// update the HTML page when the position changes.
 			geolocation.on('change', function() {
 				var coordinates = geolocation.getPosition();
+				//alert(coordinates);
 				_self.position=coordinates;
 				if(_self.position){
 					_self.overlay.setPosition(coordinates);
@@ -124,7 +125,7 @@ function Mydis(opt){
 
 			 });*/
 			geolocation.on('change:position', function() {
-
+				
 			});
 			return geolocation;
 		}
