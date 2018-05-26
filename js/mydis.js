@@ -95,6 +95,7 @@ function Mydis(opt){
 			if(_self.position){
 				_self.overlay.setPosition(coordinates);
 				_self.events.changePosition&&_self.events.changePosition(coordinates);
+				document.getElementById('mouse-position').innerHTML=_self.position[0].toFixed(6)+","+_self.position[1].toFixed(6);
 			}
 		});
 		return geolocation;
