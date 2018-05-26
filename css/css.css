@@ -79,3 +79,13 @@ select{-webkit-appearance:none;}
 .ol-control{
 	display:none;
 }
+#myposition{
+	position:absolute;
+	z-index:2;
+	bottom:10px;
+	left:10px;
+	background-image:url(../images/myposition.png);
+	background-size:100%;
+	width:40px;
+	height:40px;
+}

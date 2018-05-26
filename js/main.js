@@ -2,13 +2,15 @@
  * Created by Administrator on 2018/5/16.
  */
 	
-var extent=[12686826.330880566, 2582764.0012257705, 12687961.789686656, 2584247.1004240722];//[12686813.812213715, 2582713.078183079, 12688175.048197903, 2584215.2449381677];
+var extent=[113,23,113.5,22.5];
 var sourceProj='EPSG:4326';
-var targetProj="EPSG:3857";
+var targetProj="EPSG:4326";
 var view = new ol.View({
+	enableRotation:false,
 	projection: targetProj,
 	center:fc.proj.transform([113.9672493,22.60450238],sourceProj,targetProj),
 	zoom: 18,
+	minZoom:15
 /*	extent:extent,*/
 /*	rotation:-1.5707963*/
 });
@@ -51,6 +53,7 @@ var flayer=new ol.layer.Vector({
 	})
 });*/
 var map = new ol.Map({
+	loadTilesWhileAnimating:true,
 	controls: ol.control.defaults({
 		attributionOptions: {
 			collapsible: false
@@ -93,27 +96,33 @@ mydis.events.changePosition=function(p){
 		isFirst=false;
 	}
 	var hp=ol.proj.transform(p,targetProj,'EPSG:4326');
-	info.innerHTML=hp[0].toFixed(6)+","+hp[1].toFixed(6);
+	//info.innerHTML=hp[0].toFixed(6)+","+hp[1].toFixed(6);
 	
 };
-/*var imageSize=[4559,5031];
-var a1=[12686925.533077912, 2583125.8121094285];
-var a1_1=[508,3625];
-var a2=[12687733.940686736, 2583171.0395570323];
-var a2_2=[3468,3697];
-var calExt=function(){
-	var px=(a1[0]-a2[0])/(a1_1[0]-a2_2[0]);
-	var py=(a1[1]-a2[1])/(a1_1[1]-a2_2[1]);
-	var x1=a1[0]-a1_1[0]*px;
-	var y1=a1[1]-a1_1[1]*py;
-	var x2=a1[0]+(imageSize[0]-a1_1[0])*px;
-	var y2=a1[1]+(imageSize[1]-a1_1[1])*py;
-	return [x1,y1,x2,y2];
+window.onload=function(){
+	document.getElementById('myposition').onclick=function(e){
+		map.getView().animate({
+			center: mydis.position,
+			duration: 1000
+		});
+	}
 };
-
-console.log(calExt());*/
-
-
+/*map.on("moveend",function(e){
+	var center=map.getView().getCenter();
+	if(center[0]<extent[0]){
+		center[0]=extent[0];
+	}
+	if(center[0]>extent[2]){
+		center[0]=extent[2];
+	}
+	if(center[1]>extent[1]){
+		center[1]=extent[1]
+	}
+	if(center[1]<extent[3]){
+		center[1]=extent[3]
+	}
+	map.getView().setCenter(center);
+});*/
 
 
 
