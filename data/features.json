@@ -1,0 +1,75 @@
+{
+  "results": [
+    {
+      "id": "5b0c0e7751b5c50f4cbd83c4",
+      "name": "商店",
+      "slug": "5b0c0e7751b5c50f4cbd83c4",
+      "fields": {
+        "name": "商店",
+        "x": 113.96720588207245,
+        "y": 22.597093284130096,
+        "categories": {
+          "id": "5b0c0e5851b5c50f4cbd83c3",
+          "name": "shop"
+        }
+      }
+    },
+    {
+      "id": "5b0c0e8f51b5c50f4cbd83c5",
+      "name": "商店",
+      "slug": "5b0c0e8f51b5c50f4cbd83c5",
+      "fields": {
+        "name": "商店",
+        "x": 113.9665675163269,
+        "y": 22.598300278186798,
+        "categories": {
+          "id": "5b0c0e5851b5c50f4cbd83c3",
+          "name": "shop"
+        }
+      }
+    },
+    {
+      "id": "5b0c0ea351b5c50f4cbd83c6",
+      "name": "松鼠洗手间",
+      "slug": "5b0c0ea351b5c50f4cbd83c6",
+      "fields": {
+        "name": "松鼠洗手间",
+        "x": 113.96412134170534,
+        "y": 22.597071826457977,
+        "categories": {
+          "id": "5b0c0e3e51b5c50f4cbd83c2",
+          "name": "wc"
+        }
+      }
+    },
+    {
+      "id": "5b0c0ec151b5c50f4cbd83c7",
+      "name": "洗手间",
+      "slug": "5b0c0ec151b5c50f4cbd83c7",
+      "fields": {
+        "name": "洗手间",
+        "x": 113.96349370479585,
+        "y": 22.59724885225296,
+        "categories": {
+          "id": "5b0c0e3e51b5c50f4cbd83c2",
+          "name": "wc"
+        }
+      }
+    },
+    {
+      "id": "5b0c0edf51b5c50f4cbd83c8",
+      "name": "火烈鸟洗手间",
+      "slug": "5b0c0edf51b5c50f4cbd83c8",
+      "fields": {
+        "name": "火烈鸟洗手间",
+        "x": 113.9637726545334,
+        "y": 22.597184479236603,
+        "categories": {
+          "id": "5b0c0e3e51b5c50f4cbd83c2",
+          "name": "wc"
+        }
+      }
+    }
+  ],
+  "count": 5
+}

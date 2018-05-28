@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Reprojection</title>
+	<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+	<!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+	<script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+</head>
+<body>
+<div id="map" class="map"></div>
+<script>
+	var imageExtent=[113.970207061,22.772405516,113.98584012,22.763953671];
+	var map = new ol.Map({
+		layers: [
+			new ol.layer.Image({
+				source: new ol.source.ImageStatic({
+					url: 'images/1.jpg',
+					crossOrigin: '',
+					projection: 'EPSG:4326',
+					imageExtent: imageExtent
+				})
+			})
+		],
+		target: 'map',
+		view: new ol.View({
+			center:[113.9672493,22.60450238],
+			zoom: 14
+		})
+	});
+</script>
+</body>
+</html>

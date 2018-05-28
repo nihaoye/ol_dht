@@ -19,7 +19,7 @@
 <div id="mouse-position" style="top:10px;left:10px;position:absolute;font-size:30px;"></div>
 <span id="myposition"></span>
 <script>
-	var extent=[113.970207061,113.98584012,22.763953671,22.772405516];
+	var imageExtent=[113.970207061,22.772405516,113.98584012,22.763953671];
 	var sourceProj='EPSG:4326';
 	var targetProj="EPSG:4326";
 	var view = new ol.View({
@@ -32,14 +32,12 @@
 		/*	rotation:-1.5707963*/
 	});
 	var image=new ol.source.ImageStatic({
-	 url: 'images/dt5.jpg',
+	 url: 'images/1.jpg',
 	 projection: 'EPSG:4326',
-	 imageExtent: extent
+	 imageExtent: imageExtent
 	 });
-
 	 var layer=new ol.layer.Image({
-	 opacity:0.9,
-	 source:image
+	 	source:image
 	 });
 	var map = new ol.Map({
 		loadTilesWhileAnimating:true,
@@ -61,7 +59,14 @@
 					url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
 				})
 			}),
-			layer
+			new ol.layer.Image({
+				source: new ol.source.ImageStatic({
+					url:'images/1.jpg',
+					crossOrigin: '',
+					projection: 'EPSG:4326',
+					imageExtent: imageExtent
+				})
+			})
 		],
 		target: 'map',
 		view: view
