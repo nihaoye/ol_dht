@@ -18,12 +18,12 @@ var view = new ol.View({
 var styleHash={
 	shop:new ol.style.Style({
 		image:new ol.style.Icon({
-				src:'images/icons/shop3.png'
+				src:'images/icons/shop.png'
 			})
 		}),
 	wc:new ol.style.Style({
 		image:new ol.style.Icon({
-			src:'images/icons/wc3.png'
+			src:'images/icons/wc.png'
 		})
 	})
 };
