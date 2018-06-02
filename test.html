@@ -1,35 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Geolocation</title>
-	<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
-	<link rel="stylesheet" href="css/css.css" type="text/css">
-	<script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+	<title>深圳野生动物园测试地图</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<link rel="stylesheet" href="css/ol.css" type="text/css">
+	<link rel="stylesheet" href="css/css.css?v=11" type="text/css">
+	<script src="js/axios.min.js"></script>
+	<script src="js/ol.js"></script>
+	<!--	<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
 	<script src="js/fed-transform.js"></script>
-	<style>
-		.circle{
-			background:blueviolet;
-			width:20px;
-			height:20px;
-			border-radius:50%;
-			position:absolute;
-			z-index:9;
-			animation:mymove 2s infinite;
-			-webkit-animation:mymove 2s infinite; /* Safari 和 Chrome */
-		}
-		@keyframes mymove
-		{
-			from {opacity:0.3;}
-			to {opacity:1;}
-		}
-	</style>
+	<script src="js/mydis.js?v=1asfdasdfasdf2"></script>
 </head>
-<body style="width:100vw;height:100vh">
-<div id="map" class="map" style="width:4559px;height:5031px;position:relative;">
-	<div class="circle" style="left:508px;top:3625px"></div>
-	<div class="circle" style="left:3468px;top:3697px"></div>
-</div>
-<div id="mouse-position" style="top:10px;left:10px;position:absolute"></div>
-<script src="js/test.js"></script>
+<body>
+<div id="map" class="map"></div>
+<div id="mouse-position" style="top:10px;left:10px;position:absolute;font-size:30px;"></div>
+<span id="myposition"></span>
+<div id="tips">建议打开手机wifi，定位更准确^_^</div>
+<script>
+	window.debug = true;
+	var extent = undefined//[113.9580, 22.5960, 113.9780, 22.6060];
+	var sourceProj = 'EPSG:4326';
+	var targetProj = "EPSG:4326";
+	var view = new ol.View({
+		enableRotation: false,
+		projection: targetProj,
+		center: [113.96834313869476, 22.598670423030853],
+		zoom: 18,
+		minZoom: 11,
+		maxZoom: 19,
+		extent: extent
+	});
+	var styleHash = {
+		shop: new ol.style.Style({
+			image: new ol.style.Icon({
+				src: 'images/icons/shop.png'
+			})
+		}),
+		wc: new ol.style.Style({
+			image: new ol.style.Icon({
+				src: 'images/icons/wc.png'
+			})
+		})
+	};
+	var flayer = new ol.layer.Vector({
+		source: new ol.source.Vector(),
+		style: function (feature) {
+			return styleHash[feature.get('type')]
+		}
+	});
+	var map = new ol.Map({
+		loadTilesWhileAnimating: true,
+		controls: ol.control.defaults({
+			attributionOptions: {
+				collapsible: false
+			}
+		}),
+		layers: [
+			new ol.layer.Tile({
+				title: "天地图路网",
+				source: new ol.source.XYZ({
+					url: "http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}"
+				})
+			}),
+			new ol.layer.Tile({
+				title: "天地图文字标注",
+				source: new ol.source.XYZ({
+					url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
+				})
+			}),
+			new ol.layer.Tile({
+				source: new ol.source.XYZ({
+					url: 'map2/{z}/{y}/{x}.png'
+				})
+			}),
+			flayer
+		],
+		target: 'map',
+		view: view
+	});
+	var mydis = new Mydis({id: 'mydis', map: map});
+	var isFirst = true;
+	var info = document.getElementById('mouse-position');
+	mydis.events.changePosition = function (p) {
+		if (isFirst) {
+			if (isInExtent(p)) {
+				map.getView().setCenter(p);
+			}
+			isFirst = false;
+		}
+		if (window.debug) {
+			info.innerHTML = p[0].toFixed(6) + "," + p[1].toFixed(6);
+		}
+	};
+	window.onload = function () {
+		document.getElementById('myposition').onclick = function (e) {
+			if (isInExtent(mydis.position)) {
+				map.getView().animate({
+					center: mydis.position,
+					duration: 1000
+				});
+			} else {
+
+			}
+		}
+	};
+	axios.get('data/features.json').then(function (res) {
+		var datas = res.data.results;
+		datas.forEach(function (data) {
+			var feature = new ol.Feature({
+				geometry: new ol.geom.Point([data.fields.x, data.fields.y]),
+				name: data.fields.name
+			});
+			feature.set('type', data.fields.categories.name);
+			flayer.getSource().addFeature(feature)
+		})
+	});
+	checkNum = 9;
+	setInterval(function () {
+		if (navigator.connection && navigator.connection.type === 'wifi') {
+			document.getElementById('tips').className = '';
+		} else {
+			if (checkNum >= 10) {
+				document.getElementById('tips').className = 'active';
+				checkNum = 0;
+			}
+			checkNum += 1;
+		}
+	}, 1000);
+
+	function isInExtent(p) {
+		/*if(p[0]<113.9580||p[0]>113.9780||p[1]<22.5960||p[1]>22.6060){
+		 return false;
+		 }else{
+		 return true;
+		 }*/
+		return true;
+	}
+</script>
 </body>
 </html>

@@ -95,48 +95,12 @@ function Mydis(opt){
 			if(_self.position){
 				_self.overlay.setPosition(coordinates);
 				_self.events.changePosition&&_self.events.changePosition(coordinates);
-				document.getElementById('mouse-position').innerHTML=_self.position[0].toFixed(6)+","+_self.position[1].toFixed(6);
+				if(window.debug){
+					document.getElementById('mouse-position').innerHTML=_self.position[0].toFixed(6)+","+_self.position[1].toFixed(6);
+				}
 			}
 		});
 		return geolocation;
 	}
 	
-	function caculateFc(coords){
-		var result=[0,0];
-		for(var i=0;i<coords.length;i++){
-			result[0]+=Math.pow(coords[0]);
-			result[1]+=Math.pow(coords[1]);
-		}
-		return result;
-	}
-}
-function compassHeading( alpha, beta, gamma ) {
-	var degtorad = Math.PI / 180;
-	var _x = beta  ? beta  * degtorad : 0; // beta value
-	var _y = gamma ? gamma * degtorad : 0; // gamma value
-	var _z = alpha ? alpha * degtorad : 0; // alpha value
-
-	var cX = Math.cos( _x );
-	var cY = Math.cos( _y );
-	var cZ = Math.cos( _z );
-	var sX = Math.sin( _x );
-	var sY = Math.sin( _y );
-	var sZ = Math.sin( _z );
-
-	// Calculate Vx and Vy components
-	var Vx = - cZ * sY - sZ * sX * cY;
-	var Vy = - sZ * sY + cZ * sX * cY;
-
-	// Calculate compass heading
-	var compassHeading = Math.atan( Vx / Vy );
-
-	// Convert compass heading to use whole unit circle
-	if( Vy < 0 ) {
-		compassHeading += Math.PI;
-	} else if( Vx < 0 ) {
-		compassHeading += 2 * Math.PI;
-	}
-
-	return compassHeading * ( 180 / Math.PI ); // Compass Heading (in degrees)
-
 }

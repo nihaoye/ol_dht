@@ -2,14 +2,14 @@
  * Created by Administrator on 2018/5/16.
  */
 	
-window.debug=true;
+window.debug=false;
 var extent=[113.9580,22.5960,113.9780,22.6060];
 var sourceProj='EPSG:4326';
 var targetProj="EPSG:4326";
 var view = new ol.View({
 	enableRotation:false,
 	projection: targetProj,
-	center:[113.9672493,22.60450238],
+	center:[113.96834313869476,22.598670423030853],
 	zoom: 18,
 	minZoom:17,
 	maxZoom:19,
@@ -68,19 +68,25 @@ var isFirst=true;
 var info=document.getElementById('mouse-position');
 mydis.events.changePosition=function(p){
 	if(isFirst){
-		map.getView().setCenter(p);
+		if(isInExtent(p)){
+			map.getView().setCenter(p);
+		}
 		isFirst=false;
 	}
-	if(debug){
-		info.innerHTML=hp[0].toFixed(6)+","+hp[1].toFixed(6);
+	if(window.debug){
+		info.innerHTML=p[0].toFixed(6)+","+p[1].toFixed(6);
 	}
 };
 window.onload=function(){
 	document.getElementById('myposition').onclick=function(e){
-		map.getView().animate({
-			center: mydis.position,
-			duration: 1000
-		});
+		if(isInExtent(mydis.position)){
+			map.getView().animate({
+				center: mydis.position,
+				duration: 1000
+			});
+		}else{
+			
+		}
 	}
 };
 axios.get('data/features.json').then(function(res){
@@ -106,6 +112,14 @@ setInterval(function(){
 		checkNum+=1;
 	}
 },1000);
+
+function isInExtent(p){
+	if(p[0]<113.9580||p[0]>113.9780||p[1]<22.5960||p[1]>22.6060){
+		return false;
+	}else{
+		return true;
+	}
+}
 
 
 
