@@ -125,6 +125,7 @@ select{-webkit-appearance:none;}
 	background: rgba(0,0,0,0.7);
 	z-index: 600000;
 	color: white;
+	white-space: nowrap;
 	-webkit-transition: opacity 0.75s;
 	-moz-transition: opacity 0.75s;
 	-ms-transition: opacity 0.75s;
