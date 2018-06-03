@@ -104,6 +104,7 @@ checkNum=9;
 setInterval(function(){
 	if(navigator.connection&&navigator.connection.type==='wifi'){
 		document.getElementById('tips').className='';
+		checkNum=0;
 	}else{
 		if(checkNum>=10){
 			document.getElementById('tips').className='active';
