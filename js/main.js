@@ -115,12 +115,24 @@ setInterval(function(){
 },1000);
 
 function isInExtent(p){
+	if(!p){
+		return false;
+	}
 	if(p[0]<113.9580||p[0]>113.9780||p[1]<22.5960||p[1]>22.6060){
+		openExtentTips();
 		return false;
 	}else{
 		return true;
 	}
 }
-
+var extentTimeId=null;
+function openExtentTips(){
+	var node=document.getElementById('extentTips');
+	node.className='active';
+	extentTimeId&&clearTimeout(extentTimeId);
+	extentTimeId=setTimeout(function(){
+		node.className='';
+	},2000)
+}
 
 

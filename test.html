@@ -21,6 +21,7 @@
 <div id="mouse-position" style="top:10px;left:10px;position:absolute;font-size:30px;"></div>
 <span id="myposition"></span>
 <div id="tips">建议打开手机wifi，定位更准确^_^</div>
+<div id="extentTips">当前定位,您不在<b>深圳野生动物园</b>内!</div>
 <script>
 	window.debug = true;
 	var extent = undefined//[113.9580, 22.5960, 113.9780, 22.6060];
@@ -134,12 +135,24 @@
 	}, 1000);
 
 	function isInExtent(p) {
-		/*if(p[0]<113.9580||p[0]>113.9780||p[1]<22.5960||p[1]>22.6060){
-		 return false;
+		if(!p){
+			return false;
+		}
+		if(p[0]<113.9580||p[0]>113.9780||p[1]<22.5960||p[1]>22.6060){
+			openExtentTips();
+			 return true;
 		 }else{
-		 return true;
-		 }*/
-		return true;
+		 	return true;
+		 }
+	}
+	var extentTimeId=null;
+	function openExtentTips(){
+		var node=document.getElementById('extentTips');
+		node.className='active';
+		extentTimeId&&clearTimeout(extentTimeId);
+		extentTimeId=setTimeout(function(){
+			node.className='';
+		},2000)
 	}
 </script>
 </body>
