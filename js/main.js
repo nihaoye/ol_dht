@@ -10,8 +10,8 @@ var view = new ol.View({
 	enableRotation:false,
 	projection: targetProj,
 	center:[113.96834313869476,22.598670423030853],
-	zoom: 18,
-	minZoom:17,
+	zoom: 16,
+	minZoom:16,
 	maxZoom:19,
 	extent:extent
 });
@@ -33,6 +33,7 @@ var flayer=new ol.layer.Vector({
 		return styleHash[feature.get('type')]
 	}
 });
+flayer.setVisible(false);
 var map = new ol.Map({
 	loadTilesWhileAnimating:true,
 	controls: ol.control.defaults({
@@ -134,5 +135,14 @@ function openExtentTips(){
 		node.className='';
 	},2000)
 }
+
+map.getView().on("change:resolution",function(){
+	var zoom=map.getView().getZoom();
+	if(zoom>=18){
+		flayer.setVisible(true);
+	}else{
+        flayer.setVisible(false);
+	}
+});
 
 
