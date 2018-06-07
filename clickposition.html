@@ -19,9 +19,37 @@
 	建议打开手机wifi，定位更准确^_^
 </div>
 <script>
+    var extent=[113.9580,22.5960,113.9780,22.6060];
+    //分辨率
+    var resolutions = [
+        1.40625,
+        0.703125,
+        0.3515625,
+        0.17578125,
+        0.087890625,
+        0.0439453125,
+        0.02197265625,
+        0.010986328125,
+        0.0054931640625,
+        0.00274658203125,
+        0.001373291015625,
+        0.0006866455078125,
+        0.00034332275390625,
+        0.000171661376953125,
+        0.0000858306884765625,
+        0.00004291534423828125,
+        0.000021457672119140625,
+        0.000010728836059570312,
+        0.000005364418029785156,
+        0.000002682209014892578,
+        0.000001341104507446289
+    ];
+    var projection=ol.proj.get('EPSG:4326');//设置坐标系;
+    var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    var projectionExtent =projection.getExtent();
 	var view = new ol.View({
 		enableRotation:false,
-		projection: 'EPSG:4326',
+		projection:projection,
 		center:[113.9672493,22.60450238],
 		zoom: 18,
 		minZoom:10
@@ -47,8 +75,22 @@
 				source: new ol.source.XYZ({
 					url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
 				})
-			})
-
+			}),
+            new ol.layer.Tile({
+                opacity: 1,
+                source: new ol.source.XYZ({
+                    crossOrigin: ol.extent.getTopLeft(projectionExtent),
+                    projection: projection,
+                    tileGrid: new ol.tilegrid.WMTS({
+                        origin: ol.extent.getTopLeft(projectionExtent),
+                        resolutions: resolutions.slice(0, 21),
+                        matrixIds: matrixIds.slice(0, 21)
+                    }),
+                    tileUrlFunction: function (tileCoord) {
+                        return 'map2/' + tileCoord[0] + '/' + (-tileCoord[2]) + '/' + tileCoord[1] + '.png';
+                    },
+                })
+            }),
 		],
 		target: 'map',
 		view: view
