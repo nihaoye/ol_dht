@@ -3,9 +3,37 @@
  */
 	
 window.debug=false;
-var extent=[113.9580,22.5960,113.9780,22.6060];
+var extent=[113.9612, 22.5934, 113.9722,22.6044 ];
+//分辨率
+var resolutions = [
+    1.40625,
+    0.703125,
+    0.3515625,
+    0.17578125,
+    0.087890625,
+    0.0439453125,
+    0.02197265625,
+    0.010986328125,
+    0.0054931640625,
+    0.00274658203125,
+    0.001373291015625,
+    0.0006866455078125,
+    0.00034332275390625,
+    0.000171661376953125,
+    0.0000858306884765625,
+    0.00004291534423828125,
+    0.000021457672119140625,
+    0.000010728836059570312,
+    0.000005364418029785156,
+    0.000002682209014892578,
+    0.000001341104507446289
+];
+var projection=ol.proj.get('EPSG:4326');//设置坐标系;
+var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+var projectionExtent =projection.getExtent();
+
 var sourceProj='EPSG:4326';
-var targetProj="EPSG:4326";
+var targetProj='EPSG:4326';
 var view = new ol.View({
 	enableRotation:false,
 	projection: targetProj,
@@ -34,15 +62,22 @@ var flayer=new ol.layer.Vector({
 	}
 });
 flayer.setVisible(false);
+var image=new ol.source.ImageStatic({
+	url: 'images/19.jpg',
+	projection: 'EPSG:4326',
+	imageExtent: extent
+});
+var layer=new ol.layer.Image({
+	source:image
+});
 var map = new ol.Map({
-	loadTilesWhileAnimating:true,
 	controls: ol.control.defaults({
 		attributionOptions: {
 			collapsible: false
 		}
 	}),
 	layers: [
-/*		new ol.layer.Tile({
+		/*new ol.layer.Tile({
 			title: "天地图路网",
 			source: new ol.source.XYZ({
 				url: "http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}"
@@ -54,11 +89,22 @@ var map = new ol.Map({
 				url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
 			})
 		}),*/
-		new ol.layer.Tile({
-			source: new ol.source.XYZ({
-				url:'map2/{z}/{y}/{x}.png'
-			})
-		}),
+       /* new ol.layer.Tile({
+            opacity: 1,
+            source: new ol.source.XYZ({
+                crossOrigin: ol.extent.getTopLeft(projectionExtent),
+                projection: projection,
+                tileGrid: new ol.tilegrid.WMTS({
+                    origin: ol.extent.getTopLeft(projectionExtent),
+                    resolutions: resolutions.slice(0, 21),
+                    matrixIds: matrixIds.slice(0, 21)
+                }),
+                tileUrlFunction: function (tileCoord) {
+                    return 'map3/' + tileCoord[0] + '/' + (-tileCoord[2]) + '/' + tileCoord[1] + '.jpg';
+                },
+            })
+        }),*/
+		layer,
 		flayer
 	],
 	target: 'map',
