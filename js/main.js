@@ -63,7 +63,7 @@ var flayer=new ol.layer.Vector({
 });
 flayer.setVisible(false);
 var image=new ol.source.ImageStatic({
-	url: 'images/192.jpg',
+	url: 'images/193.jpg',
 	projection: 'EPSG:4326',
 	imageExtent: extent
 });
