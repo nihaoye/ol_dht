@@ -40,7 +40,7 @@ var view = new ol.View({
 	center:[113.96834313869476,22.598670423030853],
 	zoom: 16,
 	minZoom:16,
-	maxZoom:19,
+	maxZoom:18,
 	extent:extent
 });
 var styleHash={
@@ -63,7 +63,7 @@ var flayer=new ol.layer.Vector({
 });
 flayer.setVisible(false);
 var image=new ol.source.ImageStatic({
-	url: 'images/19.jpg',
+	url: 'images/192.jpg',
 	projection: 'EPSG:4326',
 	imageExtent: extent
 });
@@ -184,7 +184,7 @@ function openExtentTips(){
 
 map.getView().on("change:resolution",function(){
 	var zoom=map.getView().getZoom();
-	if(zoom>=18){
+	if(zoom>=17){
 		flayer.setVisible(true);
 	}else{
         flayer.setVisible(false);
