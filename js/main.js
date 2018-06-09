@@ -40,7 +40,7 @@ var view = new ol.View({
 	center:[113.96834313869476,22.598670423030853],
 	zoom: 16,
 	minZoom:16,
-	maxZoom:18,
+	maxZoom:17,
 	extent:extent
 });
 var styleHash={
