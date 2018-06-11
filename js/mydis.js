@@ -69,7 +69,7 @@ function Mydis(opt){
 		_self.dzlp=new Dzlp('jt_'+_self.id);
 		setTimeout(function(){
 			_self.geolocation=initLocate();
-		},200);
+		},20);
 		
 	}
 	init();
@@ -92,15 +92,26 @@ function Mydis(opt){
 			var coordinates = geolocation.getPosition();
 			//alert(coordinates);
 			_self.position=coordinates;
-			if(_self.position){
+			if(inExtent(_self.position)){
 				_self.overlay.setPosition(coordinates);
 				_self.events.changePosition&&_self.events.changePosition(coordinates);
 				if(window.debug){
 					document.getElementById('mouse-position').innerHTML=_self.position[0].toFixed(6)+","+_self.position[1].toFixed(6);
 				}
+			}else{
+				_self.overlay.setPosition([113.9633971452713,22.59760022163391]);
 			}
 		});
 		return geolocation;
 	}
-	
+	function inExtent(p){
+		if(!p){
+			return false;
+		}
+		if(p[0]<113.9580||p[0]>113.9780||p[1]<22.5960||p[1]>22.6060){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }
